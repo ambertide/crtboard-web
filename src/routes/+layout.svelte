@@ -1,4 +1,6 @@
 <script lang="ts">
+	import "@fontsource/vt323";
+	import "@fontsource-variable/handjet";
 	import './layout.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import type { LayoutProps } from './$types';

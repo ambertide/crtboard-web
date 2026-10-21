@@ -1,4 +1,7 @@
 import type { Preview } from '@storybook/sveltekit'
+import "../src/routes/layout.css";
+import "@fontsource/vt323";
+import "@fontsource-variable/handjet";
 
 const preview: Preview = {
   parameters: {

@@ -1,1 +1,43 @@
 @import 'tailwindcss';
+
+.font-vt323 {
+  font-family: "VT323";
+}
+.font-handjet {
+  font-family: "Handjet Variable";
+}
+
+
+@utility retro-card-shadow-md-* {
+    box-shadow: 3px 3px 0 0 --value(--color-gray-*);
+}
+
+@utility retro-card-shadow-md-pressed-* {
+    box-shadow: 1px 1px 0 0 --value(--color-gray-*);
+}
+
+@theme {
+    --font-heading: "VT323", serif;
+    --font-body: "Handjet Variable", sans-serif;
+
+    --text-heading-size-xl: 4rem;
+    --text-heading-size-lg: 3rem;
+    --text-heading-size-md: 2rem;
+    --text-heading-size-sm: 1.75rem;
+    --text-heading-size-xs: 1.5rem;
+
+    --text-body-size-lg: var(--text-heading-size-sm);
+    --text-body-size-md: var(--text-heading-size-xs);
+    --text-body-size-sm: 1.25rem;
+}
+
+@utility text-heading-* {
+    font-family: "VT323";
+    font-size: --value(--text-heading-size-*);
+}
+
+@utility text-body-* {
+    font-family: "Handjet Variable";
+    font-size: --value(--text-body-size-*);
+}
+
