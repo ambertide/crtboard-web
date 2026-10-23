@@ -21,11 +21,11 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: pnpm/setup@v1
         with:
-          node-version: '24'
-          cache: 'pnpm' # Adjust caching strategy and configuration if using other package managers
+          version: 11
+          runtime: node@24
+          cache: true
       - name: Install dependencies
         run: pnpm i # Replace with appropriate command if using other package managers
       - name: Build Storybook
