@@ -1,49 +1,49 @@
 <script lang="ts">
-    import type { Snippet } from "svelte";
+    import type { Snippet } from 'svelte'
 
     interface Props {
-        /** Inside content of the dialog */
-        children: Snippet<[]>
-        /** Opening button to render to open the dialog on press */
-        opener: Snippet<[() => void]>
-        /** Primary action button of the dialog */
-        primary?: Snippet<[() => void]>
-        /** Secondary option button of the dialog */
-        secondary?: Snippet<[() => void]>
-        /** Additional command to execute on primary action press */
-        onPrimary?: () => void
-        /** Additional command to execute on secondary action press */
-        onSecondary?: () => void
-        /** If set to false, do not close on primary click */
-        closeOnPrimary?: boolean
-        /** If set to false, do not close on secondary click */
-        closeOnSecondary?: boolean
+      /** Inside content of the dialog */
+      children: Snippet<[]>
+      /** Opening button to render to open the dialog on press */
+      opener: Snippet<[() => void]>
+      /** Primary action button of the dialog */
+      primary?: Snippet<[() => void]>
+      /** Secondary option button of the dialog */
+      secondary?: Snippet<[() => void]>
+      /** Additional command to execute on primary action press */
+      onPrimary?: () => void
+      /** Additional command to execute on secondary action press */
+      onSecondary?: () => void
+      /** If set to false, do not close on primary click */
+      closeOnPrimary?: boolean
+      /** If set to false, do not close on secondary click */
+      closeOnSecondary?: boolean
     }
 
-    let dialog: HTMLDialogElement;
+    let dialog: HTMLDialogElement
 
     const {
-        opener, children,
-        primary, onPrimary, closeOnPrimary = true,
-        secondary, onSecondary,  closeOnSecondary = true
-    }: Props = $props();
+      opener, children,
+      primary, onPrimary, closeOnPrimary = true,
+      secondary, onSecondary, closeOnSecondary = true,
+    }: Props = $props()
 
     const onOpenerPress = $derived(() => {
-        dialog.showModal();
+      dialog.showModal()
     })
 
     const onPrimaryButtonPress = $derived(() => {
-        onPrimary?.();
-        if (closeOnPrimary) {
-            dialog.close();
-        }
+      onPrimary?.()
+      if (closeOnPrimary) {
+        dialog.close()
+      }
     })
 
     const onSecondaryButtonPress = $derived(() => {
-        onSecondary?.();
-        if (closeOnSecondary) {
-            dialog.close()
-        }
+      onSecondary?.()
+      if (closeOnSecondary) {
+        dialog.close()
+      }
     })
 </script>
 

@@ -1,18 +1,18 @@
 <script module>
-  import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Dropdown from "#lib/components/Dropdown.svelte";
-  import GitIcon from "#lib/assets/icons/IconGitFork.svelte";
-  import GitSlashIcon from "#lib/assets/icons/IconGitForkWithSlash.svelte";
+  import { defineMeta } from '@storybook/addon-svelte-csf'
+  import Dropdown from '#lib/components/Dropdown.svelte'
+  import GitIcon from '#lib/assets/icons/IconGitFork.svelte'
+  import GitSlashIcon from '#lib/assets/icons/IconGitForkWithSlash.svelte'
 
   // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
   const { Story } = defineMeta({
-    title: "Components/Dropdown",
+    title: 'Components/Dropdown',
     component: Dropdown,
     globals: {
-        backgrounds: { value: 'dark', grid: false },
+      backgrounds: { value: 'dark', grid: false },
     },
-    tags: ["autodocs"],
-  });
+    tags: ['autodocs'],
+  })
 </script>
 
 <!-- Standard textual dropdown with no icons -->
@@ -25,7 +25,7 @@
     value: '',
     options: ['GitHub', 'GitLab', 'BitBucket'],
     emptyLabel: 'Pick a Forge',
-    selectedIcon: GitIcon
+    selectedIcon: GitIcon,
   }}
 />
 
@@ -37,7 +37,6 @@
     options: ['GitHub', 'GitLab', 'BitBucket'],
     emptyLabel: 'Pick a Forge',
     selectedIcon: GitIcon,
-    emptyIcon: GitSlashIcon 
+    emptyIcon: GitSlashIcon,
   }}
 />
-

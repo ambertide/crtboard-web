@@ -1,29 +1,28 @@
 <script module>
-  import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Button from "#lib/components/Button.svelte";
-  import Dialog from "#lib/components/Dialog.svelte";
-  import IconGitFork from "#lib/assets/icons/IconGitFork.svelte"
-  import IconGitForkWithSlash from "#lib/assets/icons/IconGitForkWithSlash.svelte"
-  import { fn } from "storybook/test";
+  import { defineMeta } from '@storybook/addon-svelte-csf'
+  import Button from '#lib/components/Button.svelte'
+  import Dialog from '#lib/components/Dialog.svelte'
+  import IconGitFork from '#lib/assets/icons/IconGitFork.svelte'
+  import IconGitForkWithSlash from '#lib/assets/icons/IconGitForkWithSlash.svelte'
+  import { fn } from 'storybook/test'
 
   // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
   const { Story } = defineMeta({
-    title: "Components/Dialog",
+    title: 'Components/Dialog',
     component: Dialog,
-    tags: ["autodocs"],
+    tags: ['autodocs'],
     argTypes: {
-      compact: { type: "boolean" },
+      compact: { type: 'boolean' },
       variant: {
-        control: { type: "select" },
-        options: ["default", "delete"],
+        control: { type: 'select' },
+        options: ['default', 'delete'],
       },
     },
     args: {
       onclick: fn(),
     },
-  });
+  })
 </script>
-
 
 <!-- A small dialog -->
 <Story
@@ -48,7 +47,7 @@
     name="Large Dialog"
     args={{
       closeOnPrimary: false,
-      onPrimary: () => console.log('Yep!')
+      onPrimary: () => console.log('Yep!'),
     }}
 >
     {#snippet template(args)}
@@ -68,7 +67,7 @@
           <p>
             Dialogs can take additional actions, called secondary actions, which can
             be used for a <em>variety</em> of actions, resetting dialog state, cancelling,
-            binding close to it, etc. 
+            binding close to it, etc.
           </p>
 
           <p>

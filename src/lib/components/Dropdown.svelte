@@ -1,25 +1,24 @@
 <script lang="ts">
-    import type { Snippet } from "svelte";
+    import type { Snippet } from 'svelte'
 
     interface Props {
-        value: string;
-        options: string[];
-        emptyLabel?: string;
-        emptyIcon?: Snippet;
-        selectedIcon?: Snippet;
-        class?: string;
+      value: string
+      options: string[]
+      emptyLabel?: string
+      emptyIcon?: Snippet
+      selectedIcon?: Snippet
+      class?: string
     }
 
-    let { value = $bindable(""), options, emptyLabel, emptyIcon, selectedIcon, ...rest }: Props = $props();
-    const id = $props.id();
+    let { value = $bindable(''), options, emptyLabel, emptyIcon, selectedIcon, ...rest }: Props = $props()
+    const id = $props.id()
 
-    let isEmpty = $derived(value === "");
+    let isEmpty = $derived(value === '')
 
     /** Show the EmptyIcon if empty option is selected */
-    let activeIcon = $derived(isEmpty ? (emptyIcon ?? selectedIcon) : selectedIcon);
+    let activeIcon = $derived(isEmpty ? (emptyIcon ?? selectedIcon) : selectedIcon)
 
 </script>
-
 
 <style>
     select,
@@ -41,9 +40,9 @@
 <select
     id={id}
     class={{
-        "flex gap-1 items-center px-2 pl-4 py-1  text-body-sm text-gray-50": true,
-        "bg-gray-900 retro-card-shadow-md-950 hover:retro-card-shadow-md-pressed-900 focus:retro-card-shadow-md-pressed-900": true,
-        "opacity-70": isEmpty
+      'flex gap-1 items-center px-2 pl-4 py-1  text-body-sm text-gray-50': true,
+      'bg-gray-900 retro-card-shadow-md-950 hover:retro-card-shadow-md-pressed-900 focus:retro-card-shadow-md-pressed-900': true,
+      'opacity-70': isEmpty,
     }}
     bind:value={value}
 >
@@ -53,10 +52,10 @@
     </button>
     {#if emptyLabel}
         <option
-            selected={value === ""}
+            selected={value === ''}
             class={{
-                "pl-10 pr-2 py-2": true, 
-                "bg-gray-900 hover:bg-gray-600 text-gray-50": "" !== value,
+              'pl-10 pr-2 py-2': true,
+              'bg-gray-900 hover:bg-gray-600 text-gray-50': '' !== value,
             }}
         value="">{emptyLabel}</option>
     {/if}
@@ -64,13 +63,13 @@
     <option
         selected={value === option}
         class={{
-            "pl-10 pr-2 py-2": true, 
-            "bg-gray-900 hover:bg-gray-600 text-gray-50": option !== value,
-            "bg-gray-50 text-gray-950": option === value
+          'pl-10 pr-2 py-2': true,
+          'bg-gray-900 hover:bg-gray-600 text-gray-50': option !== value,
+          'bg-gray-50 text-gray-950': option === value,
         }}
         value={option}
     >
         {option}
     </option>
-   {/each} 
+   {/each}
 </select>
