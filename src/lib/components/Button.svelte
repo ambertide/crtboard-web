@@ -1,12 +1,12 @@
 <script lang="ts">
-    import type { HTMLButtonAttributes } from 'svelte/elements'
+    import type { HTMLButtonAttributes } from 'svelte/elements';
 
     export interface Props extends HTMLButtonAttributes {
-      variant: 'default' | 'delete'
-      compact: boolean
+      variant?: 'default' | 'delete'
+      compact?: boolean
     }
 
-    const { variant = 'default', compact, children, ...rest }: Props = $props()
+    const { variant = 'default', compact = false, children, ...rest }: Props = $props();
 </script>
 
 <button
