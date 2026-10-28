@@ -4,6 +4,7 @@ import storybook from "eslint-plugin-storybook";
 import path from 'node:path';
 import js from '@eslint/js';
 import svelte from 'eslint-plugin-svelte';
+import stylistic from '@stylistic/eslint-plugin';
 import { defineConfig, includeIgnoreFile } from 'eslint/config';
 import globals from 'globals';
 import ts from 'typescript-eslint';
@@ -14,6 +15,7 @@ export default defineConfig(
 	includeIgnoreFile(gitignorePath),
 	js.configs.recommended,
 	ts.configs.recommended,
+	stylistic.configs.recommended,
 	svelte.configs.recommended,
 	{
 		languageOptions: { globals: { ...globals.browser, ...globals.node } },
