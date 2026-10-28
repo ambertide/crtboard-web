@@ -1,13 +1,13 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import path from 'node:path'
-import js from '@eslint/js'
-import svelte from 'eslint-plugin-svelte'
-import stylistic from '@stylistic/eslint-plugin'
-import { defineConfig, includeIgnoreFile } from 'eslint/config'
-import globals from 'globals'
-import ts from 'typescript-eslint'
+import path from 'node:path';
+import js from '@eslint/js';
+import svelte from 'eslint-plugin-svelte';
+import stylistic from '@stylistic/eslint-plugin';
+import { defineConfig, includeIgnoreFile } from 'eslint/config';
+import globals from 'globals';
+import ts from 'typescript-eslint';
 
-const gitignorePath = path.resolve(import.meta.dirname, '.gitignore')
+const gitignorePath = path.resolve(import.meta.dirname, '.gitignore');
 
 export default defineConfig(
   includeIgnoreFile(gitignorePath),
@@ -36,6 +36,9 @@ export default defineConfig(
   {
     // Override or add rule settings here, such as:
     // 'svelte/button-has-type': 'error'
-    rules: {},
+    rules: {
+      '@stylistic/semi': ['error', 'always'],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
   },
-)
+);
