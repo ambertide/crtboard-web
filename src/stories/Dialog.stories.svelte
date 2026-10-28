@@ -2,8 +2,6 @@
   import { defineMeta } from '@storybook/addon-svelte-csf'
   import Button from '#lib/components/Button.svelte'
   import Dialog from '#lib/components/Dialog.svelte'
-  import IconGitFork from '#lib/assets/icons/IconGitFork.svelte'
-  import IconGitForkWithSlash from '#lib/assets/icons/IconGitForkWithSlash.svelte'
   import { fn } from 'storybook/test'
 
   // More on how to set up stories at: https://storybook.js.org/docs/writing-stories

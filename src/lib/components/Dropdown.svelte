@@ -10,7 +10,7 @@
       class?: string
     }
 
-    let { value = $bindable(''), options, emptyLabel, emptyIcon, selectedIcon, ...rest }: Props = $props()
+    let { value = $bindable(''), options, emptyLabel, emptyIcon, selectedIcon, class: additionalClasses = '' }: Props = $props()
     const id = $props.id()
 
     let isEmpty = $derived(value === '')
@@ -43,6 +43,7 @@
       'flex gap-1 items-center px-2 pl-4 py-1  text-body-sm text-gray-50': true,
       'bg-gray-900 retro-card-shadow-md-950 hover:retro-card-shadow-md-pressed-900 focus:retro-card-shadow-md-pressed-900': true,
       'opacity-70': isEmpty,
+      [additionalClasses]: !!additionalClasses,
     }}
     bind:value={value}
 >
