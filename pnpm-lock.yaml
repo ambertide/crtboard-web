@@ -51,6 +51,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.0
         version: 4.3.3(vite@8.3.4(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
+      '@types/dom-serial':
+        specifier: ^1.0.7
+        version: 1.0.7
       '@types/node':
         specifier: ^24
         version: 24.19.2
@@ -1025,6 +1028,9 @@ packages:
 
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
+
+  '@types/dom-serial@1.0.7':
+    resolution: {integrity: sha512-dxO2/otl3HP7YCK6LBf94WnI7qOusZV02RGAWnnpR0ENY85iM3RzH2poUJpZiOeNZRxyguMZnwucYMZ2Xtr+TQ==}
 
   '@types/esrecurse@4.3.1':
     resolution: {integrity: sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw==}
@@ -3019,6 +3025,8 @@ snapshots:
       assertion-error: 2.0.1
 
   '@types/deep-eql@4.0.2': {}
+
+  '@types/dom-serial@1.0.7': {}
 
   '@types/esrecurse@4.3.1': {}
 

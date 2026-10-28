@@ -4,8 +4,12 @@
 		"strict": true,
 		"types": [
 			"$app/types",
-			"node"
+			"node",
+			"dom-serial"
 		]
 	},
-	"include": ["src", "vite.config.ts"]
+	"include": [
+		"src",
+		"vite.config.ts"
+	]
 }
