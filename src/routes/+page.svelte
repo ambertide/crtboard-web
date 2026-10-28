@@ -2,7 +2,7 @@
   import Button from '#lib/components/Button.svelte';
     import { ServiceLocator } from '#lib/classes/ServiceLocator.svelte.ts';
 
-  let canvas: HTMLCanvasElement|null = $state(null);
+  let canvas: HTMLCanvasElement | null = $state(null);
   const locator = $derived(canvas ? new ServiceLocator(canvas) : null);
 </script>
 
