@@ -10,6 +10,7 @@ export class SerialTransmissionService extends TransmissionService {
   private port: SerialPort | null = null;
   private _wasConnectedOnce = false;
   private onConnectionChange = (_: SerialTransmissionService) => {};
+  private queue: Blob[] = [];
 
   constructor() {
     super();
@@ -35,22 +36,45 @@ export class SerialTransmissionService extends TransmissionService {
   };
 
   transmit = async (data: Blob): Promise<void> => {
-    const writer = this.port?.writable.getWriter();
-    await writer?.write(await data.arrayBuffer());
-    writer?.releaseLock();
+    if (data.size > 10) {
+      return;
+    }
+    this.queue.push(data);
+  };
+
+  private loop = () => {
+    const innerLoop = async () => {
+      const writer = this.port?.writable.getWriter();
+      const data = this.queue.shift();
+      try {
+        if (data) {
+          console.log('writing data to port', data);
+          await writer?.write(await data.arrayBuffer());
+        }
+      }
+      catch (exception) {
+        console.error(exception);
+      }
+      finally {
+        writer?.releaseLock();
+      }
+      setTimeout(innerLoop, 1000 / 25);
+    };
+    innerLoop();
   };
 
   initialise = async () => {
     const userDefinedPort = await navigator.serial.requestPort();
     try {
       await userDefinedPort.open({ baudRate: 38400 });
+      await this.transmit(new Blob([new Uint8Array([0x0, 0x0, 0x0, 0x01, 0x16])]));
       this.onPortConnect(userDefinedPort);
-      await this.transmit(new Blob([new Uint8Array([2, 34, 5, 0x0D, 0x0A])]));
     }
     catch (e) {
       console.log(e);
     }
     userDefinedPort.addEventListener('disconnect', () => this.onPortDisconnect());
+    this.loop();
   };
 
   registerOnConnectionChange = (onConnectionChange: (service: TransmissionService) => void) => {

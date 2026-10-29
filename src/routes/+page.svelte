@@ -1,17 +1,19 @@
 <script lang="ts">
   import Button from '#lib/components/Button.svelte';
-    import { ServiceLocator } from '#lib/classes/ServiceLocator.svelte.ts';
+  import { ServiceLocator } from '#lib/classes/ServiceLocator.svelte.ts';
+  import Dashboard from '#lib/features/dashboard/Dashboard.svelte';
 
   let canvas: HTMLCanvasElement | null = $state(null);
-  const locator = $derived(canvas ? new ServiceLocator(canvas) : null);
+  let locator = $derived(canvas ? new ServiceLocator(canvas) : null);
 </script>
 
-<canvas bind:this={canvas}>
+<Dashboard bind:canvas={canvas}></Dashboard>
 
-</canvas>
 
 {#if locator?.transmissionState.isConnected}
   <Button variant="delete">Disconnect</Button>
 {:else}
-  <Button onclick={() => locator?.startStreaming()}>Connect</Button>
+  <Button onclick={() => {
+    locator?.startStreaming()
+  }}>Connect</Button>
 {/if}
