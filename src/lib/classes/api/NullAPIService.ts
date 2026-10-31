@@ -36,7 +36,7 @@ export class NullAPIService extends APIService {
         {
           name: 'beemu',
           branch: 'feat/done',
-          openPRs: 3,
+          openPRs: 0,
         },
         {
           name: 'meow',

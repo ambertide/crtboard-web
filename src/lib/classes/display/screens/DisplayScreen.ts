@@ -14,16 +14,16 @@ export abstract class DisplayScreen {
 
   protected static readonly fonts = {
     header: {
-      xl: '64 VT323',
-      lg: '48 VT323',
-      md: '32 VT323',
-      sm: '28 VT323',
-      xs: '24 VT323',
+      xl: '64px VT323',
+      lg: '48px VT323',
+      md: '32px VT323',
+      sm: '28px VT323',
+      xs: '24px VT323',
     },
     body: {
-      lg: '28 Handjet Variable',
-      md: '24 Handjet Variable',
-      sm: '20 Handjet Variable',
+      lg: '28px Handjet Variable',
+      md: '24px Handjet Variable',
+      sm: '20px Handjet Variable',
     },
   };
 
@@ -46,9 +46,10 @@ export abstract class DisplayScreen {
    * @param y Y coord
    */
   protected drawSVGAt(path: Path2D, x: number, y: number) {
-    const copiedPath = new Path2D(path);
-    copiedPath.moveTo(x, y);
+    this.ctx.save();
+    this.ctx.translate(x, y)
     this.ctx.fill(path);
+    this.ctx.restore();
   }
 
   protected get width() {
