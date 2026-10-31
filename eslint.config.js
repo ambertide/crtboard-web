@@ -39,6 +39,7 @@ export default defineConfig(
     rules: {
       '@stylistic/semi': ['error', 'always'],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
     },
   },
 );
