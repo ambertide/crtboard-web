@@ -1,3 +1,5 @@
+import type { ScreenContext } from './ScreenContext';
+
 export abstract class TransmissionService {
   /** Initialise the data handler. */
   abstract initialise(): Promise<void>;
@@ -9,4 +11,6 @@ export abstract class TransmissionService {
   abstract get wasConnectedOnce(): boolean;
   /** Register a callback to be run when a port is disconnected  or connectec */
   abstract registerOnConnectionChange(onConnectionChange: (service: TransmissionService) => void): void;
+  /** Get the screen context reported by the transmission device */
+  abstract get screenContext(): ScreenContext;
 }

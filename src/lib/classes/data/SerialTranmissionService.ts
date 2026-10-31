@@ -1,3 +1,4 @@
+import type { ScreenContext } from './ScreenContext';
 import { TransmissionService } from './TransmissionService';
 
 // TODO: This is probably unnecessary
@@ -80,4 +81,12 @@ export class SerialTransmissionService extends TransmissionService {
   registerOnConnectionChange = (onConnectionChange: (service: TransmissionService) => void) => {
     this.onConnectionChange = onConnectionChange;
   };
+
+  get screenContext(): ScreenContext {
+    return {
+      signal: 'PAL',
+      width: 720,
+      height: 576,
+    };
+  }
 }
