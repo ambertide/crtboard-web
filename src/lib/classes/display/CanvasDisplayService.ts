@@ -1,3 +1,5 @@
+import type { ScreenContext } from '../data/ScreenContext';
+import type { DashboardData } from '../api/DashboardData';
 import { DisplayService } from './DisplayService';
 import { screens } from './screens';
 import type { DisplayScreen } from './screens/DisplayScreen';
@@ -7,11 +9,15 @@ export class CanvasDisplayService extends DisplayService {
   private onSampleArrive = (_: Blob) => {};
   private setIntervalID = -1;
   private currentScreen: DisplayScreen | undefined;
+  private readonly dashboardData: DashboardData;
+  private readonly screenContext: ScreenContext;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, dashboardData: DashboardData, screenContext: ScreenContext) {
     super();
     this.source = canvas;
-    this.switchScreen('test');
+    this.dashboardData = dashboardData;
+    this.screenContext = screenContext;
+    this.switchScreen('dashboard');
   }
 
   private sample = () => {
@@ -31,7 +37,6 @@ export class CanvasDisplayService extends DisplayService {
   }
 
   switchScreen(screen: string): void {
-    debugger;
     const ScreenClass = screens.find(s => s.id === screen);
     if (!ScreenClass) {
       return;
@@ -39,7 +44,7 @@ export class CanvasDisplayService extends DisplayService {
     if (this.currentScreen) {
       this.currentScreen.release();
     }
-    this.currentScreen = new ScreenClass(this.source);
+    this.currentScreen = new ScreenClass(this.source, this.dashboardData, this.screenContext);
     this.currentScreen.render();
   }
 }

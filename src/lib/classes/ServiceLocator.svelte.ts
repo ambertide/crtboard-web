@@ -2,6 +2,8 @@ import { SerialTransmissionService } from './data/SerialTranmissionService';
 import type { TransmissionService } from './data/TransmissionService';
 import { CanvasDisplayService } from './display/CanvasDisplayService';
 import type { DisplayService } from './display/DisplayService';
+import type { APIService } from './api/APIService';
+import { NullAPIService } from './api/NullAPIService';
 
 export class ServiceLocator {
   transmissionState = $state({
@@ -11,10 +13,12 @@ export class ServiceLocator {
 
   private readonly transmissionService: TransmissionService;
   private readonly displayService: DisplayService;
+  private readonly serverService: APIService;
 
   constructor(canvas: HTMLCanvasElement) {
-    this.displayService = new CanvasDisplayService(canvas);
+    this.serverService = new NullAPIService();
     this.transmissionService = new SerialTransmissionService();
+    this.displayService = new CanvasDisplayService(canvas, this.serverService.data, this.transmissionService.screenContext);
     // Register callback to pass the screen samples to RPI4.
     this.displayService.registerOnSampleArrive(this.transmissionService.transmit);
     // Register a connection change handler so that we can keep it reactive.
