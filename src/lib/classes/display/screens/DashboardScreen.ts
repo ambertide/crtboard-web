@@ -1,9 +1,17 @@
-import type { Repo } from '#lib/classes/api/DashboardData.ts';
+import type { Column, DashboardData, Repo } from '#lib/classes/api/DashboardData.ts';
 import { DisplayScreen } from './DisplayScreen';
 // @ts-ignore: IDE is going insane here, custom loader support seems inconsistent.
 import IconGitMerge from '#lib/assets/icons/at-icons_git-merge.svg?d';
 // @ts-ignore: IDE is going insane here, custom loader support seems inconsistent.
 import IconGitBranch from '#lib/assets/icons/at-icons_git-branch.svg?d';
+// @ts-ignore: IDE is going insane here, custom loader support seems inconsistent.
+import IconCalendar from '#lib/assets/icons/at-icons_calendar.svg?d';
+// @ts-ignore: IDE is going insane here, custom loader support seems inconsistent.
+import IconRoadblock from '#lib/assets/icons/at-icons_roadblock.svg?d';
+// @ts-ignore: IDE is going insane here, custom loader support seems inconsistent.
+import IconHourglass from '#lib/assets/icons/at-icons_hourglass.svg?d';
+// @ts-ignore: IDE is going insane here, custom loader support seems inconsistent.
+import IconDone from '#lib/assets/icons/at-icons_done.svg?d';
 
 export class DashboardScreen extends DisplayScreen {
   private lastRenderedFooterCount = 0;
@@ -12,6 +20,17 @@ export class DashboardScreen extends DisplayScreen {
   private static readonly icons = {
     merge: IconGitMerge,
     branch: IconGitBranch,
+    calendar: IconCalendar,
+    roadblock: IconRoadblock,
+    hourglass: IconHourglass,
+    done: IconDone,
+  };
+
+  private static readonly columnIcons: Record<Column['type'], (typeof this.icons)[keyof typeof this.icons]> = {
+    BLOCKED: this.icons.roadblock,
+    TODO: this.icons.calendar,
+    IN_PROGRESS: this.icons.hourglass,
+    DONE: this.icons.done,
   };
 
   constructor(...args: ConstructorParameters<typeof DisplayScreen>) {
@@ -40,6 +59,7 @@ export class DashboardScreen extends DisplayScreen {
     this.ctx.strokeRect(21.5, 21.5, this.canvas.width - (22 * 2), this.canvas.height - (22 * 2));
     // Header
     this.ctx.strokeRect(21.5, 21.5, this.canvas.width - (22 * 2), 36);
+    this.renderColumns();
     this.renderGitFooters();
     this.renderBody();
   }
@@ -106,6 +126,24 @@ export class DashboardScreen extends DisplayScreen {
     this.drawSVGAt(new Path2D(DashboardScreen.icons.branch), this.canvas.width - 50, start.y + 8);
     this.ctx.fillText(repo.branch, start.x + (safeZoneWidth * 3) - 36, start.y + 8 + 18);
     this.ctx.restore();
+  };
+
+  private renderColumns = () => {
+    this.dashboardData.asana?.cols.forEach((column, columnIndex) => {
+      this.ctx.save();
+      const { type, tasks } = column;
+      const fillColor = tasks ? DisplayScreen.colors['gray-50'] : DisplayScreen.colors['gray-400'];
+      const icon = new Path2D(DashboardScreen.columnIcons[type]);
+      const startOffset = 34 + (columnIndex * 48);
+      const yOffset = 30;
+      this.ctx.fillStyle = fillColor;
+      this.ctx.font = DisplayScreen.fonts.body.sm;
+      this.ctx.textAlign = 'left';
+      this.drawSVGAt(icon, startOffset, yOffset);
+      this.ctx.textBaseline = 'top';
+      this.ctx.fillText(`${tasks}`, startOffset + 24, yOffset);
+      this.ctx.restore();
+    });
   };
 
   private renderGitFooter = (start: { x: number, y: number }, repo: Repo) => {
