@@ -47,7 +47,7 @@ export abstract class DisplayScreen {
    */
   protected drawSVGAt(path: Path2D, x: number, y: number) {
     this.ctx.save();
-    this.ctx.translate(x, y)
+    this.ctx.translate(x, y);
     this.ctx.fill(path);
     this.ctx.restore();
   }

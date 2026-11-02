@@ -1,4 +1,4 @@
-import type { Column, DashboardData, Repo } from '#lib/classes/api/DashboardData.ts';
+import type { Column, Repo } from '#lib/classes/api/DashboardData.ts';
 import { DisplayScreen } from './DisplayScreen';
 // @ts-ignore: IDE is going insane here, custom loader support seems inconsistent.
 import IconGitMerge from '#lib/assets/icons/at-icons_git-merge.svg?d';
