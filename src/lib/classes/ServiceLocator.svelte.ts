@@ -20,7 +20,7 @@ export class ServiceLocator {
     this.transmissionService = new SerialTransmissionService();
     this.displayService = new CanvasDisplayService(canvas, this.serverService.data, this.transmissionService.screenContext);
     // Register callback to pass the screen samples to RPI4.
-    this.displayService.registerOnSampleArrive(this.transmissionService.transmit);
+    this.displayService.registerOnSampleArrive(s => this.transmissionService.transmit(s, 'DRAW'));
     // Register a connection change handler so that we can keep it reactive.
     this.transmissionService.registerOnConnectionChange((service) => {
       this.transmissionState.isConnected = service.connected;

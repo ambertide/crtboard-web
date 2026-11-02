@@ -6,7 +6,7 @@ import type { DisplayScreen } from './screens/DisplayScreen';
 
 export class CanvasDisplayService extends DisplayService {
   private readonly source: HTMLCanvasElement;
-  private onSampleArrive = (_: Blob) => {};
+  private onSampleArrive = (_: Uint8ClampedArray) => {};
   private setIntervalID = -1;
   private currentScreen: DisplayScreen | undefined;
   private readonly dashboardData: DashboardData;
@@ -21,10 +21,14 @@ export class CanvasDisplayService extends DisplayService {
   }
 
   private sample = () => {
-    this.source.toBlob(blob => blob ? this.onSampleArrive(blob) : (b: null) => b);
+    if (this.onSampleArrive) {
+      const imageData = this.source.getContext('2d')?.getImageData(0, 0, this.source.width, this.source.height);
+      // We just need two channels for black-white since all our tones are gray :pray:
+      this.onSampleArrive(imageData?.data.filter((_, i) => (i % 2) === 0) ?? new Uint8ClampedArray());
+    }
   };
 
-  registerOnSampleArrive(callback: (sample: Blob) => void): void {
+  registerOnSampleArrive(callback: (sample: Uint8ClampedArray) => void): void {
     this.onSampleArrive = callback;
   }
 

@@ -4,6 +4,12 @@ import { TransmissionService } from './TransmissionService';
 // TODO: This is probably unnecessary
 type SerialPort = Awaited<ReturnType<typeof navigator.serial.requestPort>>;
 
+const packetTypeToByte = {
+  DEBUG: 0x00,
+  QUERY: 0x01,
+  DRAW: 0x02,
+};
+
 /**
  * Send data to a webserial target
  */
@@ -11,7 +17,7 @@ export class SerialTransmissionService extends TransmissionService {
   private port: SerialPort | null = null;
   private _wasConnectedOnce = false;
   private onConnectionChange = (_: SerialTransmissionService) => {};
-  private queue: Blob[] = [];
+  private queue: { data: Uint8ClampedArray, packetType: keyof typeof packetTypeToByte }[] = [];
 
   constructor() {
     super();
@@ -36,21 +42,27 @@ export class SerialTransmissionService extends TransmissionService {
     this.onConnectionChange(this);
   };
 
-  transmit = async (data: Blob): Promise<void> => {
-    if (data.size > 10) {
-      return;
-    }
-    this.queue.push(data);
+  transmit = async (data: Uint8ClampedArray, packetType: 'DEBUG' | 'QUERY' | 'DRAW'): Promise<void> => {
+    this.queue.push({ data, packetType });
+  };
+
+  private transmitPacket = async (data: Uint8ClampedArray, packetType: 'DEBUG' | 'QUERY' | 'DRAW', writer: WritableStreamDefaultWriter<unknown>) => {
+    const tagByte = packetTypeToByte[packetType];
+    const dataSize = data.length;
+    // Bytes are transmitted in little endian in three bytes
+    const sizeBytes = [(dataSize & 0xFF0000) >> 16, (dataSize & 0x00FF00) >> 8, dataSize & 0x0000FF];
+    const transmissionData = new Uint8ClampedArray([tagByte, ...sizeBytes, ...data]);
+    await writer.write(transmissionData.buffer);
   };
 
   private loop = () => {
     const innerLoop = async () => {
       const writer = this.port?.writable.getWriter();
-      const data = this.queue.shift();
+      const { data, packetType } = this.queue.shift() ?? {};
       try {
-        if (data) {
+        if (data && packetType && writer) {
           console.log('writing data to port', data);
-          await writer?.write(await data.arrayBuffer());
+          await this.transmitPacket(data, packetType, writer);
         }
       }
       catch (exception) {
@@ -68,7 +80,7 @@ export class SerialTransmissionService extends TransmissionService {
     const userDefinedPort = await navigator.serial.requestPort();
     try {
       await userDefinedPort.open({ baudRate: 38400 });
-      await this.transmit(new Blob([new Uint8Array([0x0, 0x0, 0x0, 0x01, 0x16])]));
+      await this.transmit(new Uint8ClampedArray([0x16]), 'DEBUG');
       this.onPortConnect(userDefinedPort);
     }
     catch (e) {

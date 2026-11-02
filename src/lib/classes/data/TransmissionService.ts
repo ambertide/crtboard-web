@@ -4,7 +4,7 @@ export abstract class TransmissionService {
   /** Initialise the data handler. */
   abstract initialise(): Promise<void>;
   /** Transmit some data to the target of the data handler. */
-  abstract transmit(data: Blob): void;
+  abstract transmit(data: Uint8ClampedArray, packetType: 'DEBUG' | 'QUERY' | 'DRAW'): void;
   /** Returns while this data handler *is* connected */
   abstract get connected(): boolean;
   /** Returns whether this data handler was once connected */
