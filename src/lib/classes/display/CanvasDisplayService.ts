@@ -2,12 +2,13 @@ import type { ScreenContext } from '../data/ScreenContext';
 import type { DashboardData } from '../api/DashboardData';
 import { DisplayService } from './DisplayService';
 import { screens } from './screens';
-import type { DisplayScreen } from './screens/DisplayScreen';
+import { DisplayScreen } from './screens/DisplayScreen';
 
 export class CanvasDisplayService extends DisplayService {
   private readonly source: HTMLCanvasElement;
   private onSampleArrive = (_: Uint8ClampedArray) => {};
   private setIntervalID = -1;
+  private canvasLoaded = false;
   private currentScreen: DisplayScreen | undefined;
   private readonly dashboardData: DashboardData;
   private readonly screenContext: ScreenContext;
@@ -17,7 +18,13 @@ export class CanvasDisplayService extends DisplayService {
     this.source = canvas;
     this.dashboardData = dashboardData;
     this.screenContext = screenContext;
-    this.switchScreen('dashboard');
+    this.switchScreen('test');
+    Promise.all(DisplayScreen.fontStrings.map(f => document.fonts.load(f))).then(
+      () => {
+        this.canvasLoaded = true;
+        this.switchScreen('dashboard');
+      },
+    );
   }
 
   private sample = () => {

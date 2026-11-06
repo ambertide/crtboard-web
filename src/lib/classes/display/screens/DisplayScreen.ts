@@ -59,4 +59,11 @@ export abstract class DisplayScreen {
   protected get height() {
     return this.sctx.height;
   }
+
+  public static get fontStrings() {
+    return [
+      ...Object.values(DisplayScreen.fonts.body),
+      ...Object.values(DisplayScreen.fonts.header),
+    ];
+  }
 }
