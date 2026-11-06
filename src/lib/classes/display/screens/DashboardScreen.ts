@@ -72,6 +72,14 @@ export class DashboardScreen extends DisplayScreen {
   }
 
   private renderBody() {
+    this.registerZone({
+      name: 'body',
+      x: 22.5,
+      y: 22.5 + 36,
+      offsetX: this.innerBodyWidth - 2,
+      offsetY: this.bodyHeightBesidesFooter - 2,
+    });
+    this.activateZone('body', DisplayScreen.colors['gray-400']);
     // Clear a large middle section to destroy any leftover text
     this.ctx.fillRect(22.5, 22.5 + 36, this.innerBodyWidth - 2, this.bodyHeightBesidesFooter - 2);
     // Now actually draw the thing
@@ -159,6 +167,7 @@ export class DashboardScreen extends DisplayScreen {
   };
 
   public render(): void {
+    super.render();
     // Calculate updates.
   }
 

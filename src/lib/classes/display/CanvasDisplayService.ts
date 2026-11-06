@@ -28,6 +28,7 @@ export class CanvasDisplayService extends DisplayService {
   }
 
   private sample = () => {
+    this.currentScreen?.render();
     if (this.onSampleArrive) {
       const imageData = this.source.getContext('2d')?.getImageData(0, 0, this.source.width, this.source.height);
       // We just need two channels for black-white since all our tones are gray :pray:
